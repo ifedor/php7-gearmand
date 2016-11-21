@@ -5,6 +5,8 @@ namespace GearmanDeamon;
 
 class Client extends \GearmanClient implements ClientInterface {
 
+    use InitializeTrait;
+
     /** @var array  */
     private $_priority_map = [
         self::PRIORITY_LOW    => 'doLowBackground',
@@ -34,12 +36,19 @@ class Client extends \GearmanClient implements ClientInterface {
 
         parent::__construct();
 
-        $this->_settings = array_merge($this->_settings, $settings);
+        $this->validateSettings($settings);
+    }
 
+    protected function validateSettings(array $settings) : bool
+    {
+        if(empty($settings['host'])) {
+            throw new ClientArgumentException('"host" can\'t be empty');
+        }
+        $this->_settings = array_merge($this->_settings, $settings);
         $this->_settings['port'] = intval($this->_settings['port']);
         $this->_settings['timeout'] = intval($this->_settings['timeout']);
-        $this->addServer($this->_settings['host'], $this->_settings['port']);
-        $this->setTimeout($this->_settings['timeout']);
+
+        return true;
     }
 
     /**
@@ -52,7 +61,9 @@ class Client extends \GearmanClient implements ClientInterface {
 
     public function add(string $function_name, array $workload, string $unique = NULL, $priority = self::PRIORITY_LOW) : bool
     {
-        $result = false;
+        if($this->_initialized === false) {
+            $this->init();
+        }
         if(!empty($workload)){
             $workload = json_encode($workload);
             if (!isset($this->_priority_map[$priority])) {
@@ -60,14 +71,19 @@ class Client extends \GearmanClient implements ClientInterface {
             }
             $unique = strval($unique);
             $job_id = $this->{$this->_priority_map[$priority]}($function_name, $workload, $unique);
-            $result = $this->returnCode() === GEARMAN_SUCCESS;
+            $result = ($this->returnCode() === GEARMAN_SUCCESS);
             $this->_last_job_id = $job_id;
+        } else {
+            throw new ClientArgumentException('Empty workload');
         }
         return  $result;
     }
 
     public function immediately(string $function_name, array $workload, string $unique = NULL) : string
     {
+        if($this->_initialized === false) {
+            $this->init();
+        }
         if (is_array($workload)) {
             $workload = json_encode($workload);
         }
@@ -77,6 +93,9 @@ class Client extends \GearmanClient implements ClientInterface {
     public function status(string $function_name) : array
     {
         $result = [];
+        if($this->_initialized === false) {
+            $this->init();
+        }
         $stat = $this->jobStatus($function_name);
         if ($stat[0]) {
             $result = [
