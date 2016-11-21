@@ -3,6 +3,10 @@ declare(strict_types = 1);
 
 namespace GearmanDeamon;
 
+/**
+ * Class Client
+ * @package GearmanDeamon
+ */
 class Client extends \GearmanClient implements ClientInterface {
 
     use InitializeTrait;
@@ -51,9 +55,6 @@ class Client extends \GearmanClient implements ClientInterface {
         return true;
     }
 
-    /**
-     * @return mixed
-     */
     public function getLastJobId()
     {
         return (empty($this->_last_job_id))? false : $this->_last_job_id;
