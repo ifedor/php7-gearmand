@@ -9,10 +9,9 @@ trait InitializeTrait
     protected $_initialized = false;
 
     /**
-     * @return object
      * @throws \Exception
      */
-    public function init() : object
+    public function init()
     {
         if(!method_exists($this, 'addServer') || !method_exists($this, 'setTimeout')) {
             throw new \Exception('Object must have methods: "addServer", "setTimeout"');
