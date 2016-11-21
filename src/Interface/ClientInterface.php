@@ -9,7 +9,6 @@ namespace GearmanDeamon;
  */
 interface ClientInterface {
 
-
     const PRIORITY_LOW = 1;
     const PRIORITY_MEDIUM = 2;
     const PRIORITY_HIGH = 3;
