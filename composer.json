@@ -1,0 +1,33 @@
+{
+  "name" : "ifedor/php7-gearmand",
+  "description" : "PHP Gearman",
+  "type" : "library",
+  "authors" : [{
+    "name" : "Ilya Fedorchuk",
+    "email" : "bkmz92@gmail.com",
+    "homepage" : "http://github.com/ifedor"
+  }
+  ],
+  "keywords" : [
+    "gearman",
+    "workers",
+    "queues"
+  ],
+  "homepage" : "https://github.com/ifedor/php7-gearmand",
+  "require" : {
+    "php" : ">=7.1"
+  },
+  "require-dev" : {},
+  "autoload" : {
+    "psr-4" : {
+      "GearmanDeamon\\" : "src/"
+    }
+  },
+  "support" : {
+    "email" : "bkmz92@gmail.com",
+    "issues" : "https://github.com/ifedor/php7-gearmand/issues"
+  },
+  "include-path" : [
+    "src/"
+  ]
+}
