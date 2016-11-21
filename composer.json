@@ -2,6 +2,7 @@
   "name" : "ifedor/php7-gearmand",
   "description" : "PHP Gearman",
   "type" : "library",
+  "version": "0.0.1",
   "authors" : [{
     "name" : "Ilya Fedorchuk",
     "email" : "bkmz92@gmail.com",
@@ -14,9 +15,7 @@
     "queues"
   ],
   "homepage" : "https://github.com/ifedor/php7-gearmand",
-  "require" : {
-    "php" : ">=7.1"
-  },
+  "require" : {},
   "require-dev" : {},
   "autoload" : {
     "psr-4" : {
