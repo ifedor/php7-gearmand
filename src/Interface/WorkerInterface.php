@@ -15,7 +15,7 @@ interface WorkerInterface {
      * @param null $context
      * @return bool
      */
-    public function add_function(string $function_name, callable $function, $context = NULL) : bool;
+    public function add_function(string $function_name, $function, $context = NULL) : bool;
 
     /**
      * @return mixed

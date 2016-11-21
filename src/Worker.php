@@ -38,7 +38,7 @@ class Worker extends \GearmanWorker implements WorkerInterface {
         return true;
     }
 
-    public function add_function(string $function_name, callable $function, $context = NULL) : bool {
+    public function add_function(string $function_name, $function, $object = NULL, $context = NULL) : bool {
         if (isset($this->_functions[$function_name])) {
             throw new WorkerArgumentException($function_name . ' already added');
         }
